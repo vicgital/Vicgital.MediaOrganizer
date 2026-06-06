@@ -1,5 +1,8 @@
 <Solution>
-  <Folder Name="/deployment/" />
+  <Folder Name="/deployment/">
+    <File Path="CLAUDE.md" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Vicgital.MediaOrganizer.Application/Vicgital.MediaOrganizer.Application.csproj" />
     <Project Path="src/Vicgital.MediaOrganizer.Domain/Vicgital.MediaOrganizer.Domain.csproj" Id="364b040e-c311-47a6-a7b1-386958d356da" />
