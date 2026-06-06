@@ -26,7 +26,9 @@ namespace Vicgital.MediaOrganizer
             var console = GetConsoleLogger();
             console.Information("Application started at {Time}", DateTimeOffset.Now);
 
-            List<string> paths = await GetPathsFromFile();
+            var pathsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathsFile);
+            console.Information("Using paths file: {PathsFile}", pathsFilePath);
+            List<string> paths = await GetPathsFromFile(pathsFilePath);
 
             if (paths.Count == 0)
             {
@@ -96,11 +98,11 @@ namespace Vicgital.MediaOrganizer
         private static Logger GetConsoleLogger() =>
             LoggerConfigurationBuilder.BuildDefault(LogEventLevel.Information).CreateLogger();
 
-        private static async Task<List<string>> GetPathsFromFile()
+        private static async Task<List<string>> GetPathsFromFile(string pathsFile)
         {
-            if (File.Exists(PathsFile))
+            if (File.Exists(pathsFile))
             {
-                var contents = await File.ReadAllLinesAsync(PathsFile);
+                var contents = await File.ReadAllLinesAsync(pathsFile);
 
                 var paths = contents
                     .Select(l => l.Trim())
