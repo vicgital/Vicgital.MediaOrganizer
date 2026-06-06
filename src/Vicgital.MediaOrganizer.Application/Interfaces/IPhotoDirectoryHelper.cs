@@ -2,8 +2,8 @@
 
 namespace Vicgital.MediaOrganizer.Application.Interfaces
 {
-    public interface IVideoDirectoryHelper
+    public interface IPhotoDirectoryHelper
     {
-        Task<List<MediaFileInfo>> GetVideoFilesAsync(string folderPath);
+        Task<List<MediaFileInfo>> GetPhotoFilesAsync(string folderPath);
     }
 }

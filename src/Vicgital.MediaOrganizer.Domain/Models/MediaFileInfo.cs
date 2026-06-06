@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Vicgital.MediaOrganizer.Domain.Models
+﻿namespace Vicgital.MediaOrganizer.Domain.Models
 {
-    public class VideoFileInfo
+    public class MediaFileInfo
     {
         public required string FilePath { get; init; }
         public required string FileName { get; init; }

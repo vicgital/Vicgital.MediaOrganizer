@@ -6,5 +6,6 @@
         public const string FfmpegArgs = "FFMPEG_ARGS";
         public const string FfprobePath = "FFPROBE_PATH";
         public const string AllowedVideoExtensions = "ALLOWED_VIDEO_EXTENSIONS";
+        public const string AllowedPhotoExtensions = "ALLOWED_PHOTO_EXTENSIONS";
     }
 }

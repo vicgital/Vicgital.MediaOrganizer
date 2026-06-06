@@ -2,7 +2,7 @@
 {
     public class VideoResizedResult
     {
-        public required VideoFileInfo VideoFileInfo { get; init; }
+        public required MediaFileInfo VideoFileInfo { get; init; }
         public required VideoProcessedResult VideoProcessedResult { get; init; }
     }
 }

@@ -6,15 +6,13 @@ namespace Vicgital.MediaOrganizer.Application.Jobs
     public class VideoMoverJob(
         ILogger<VideoMoverJob> logger,
         IVideoDirectoryHelper directoryHelper,
-        IFileSystemService fileSystem,
-        IReportWriter reportWriter
+        IFileSystemService fileSystem
         ) : IJob
     {
 
         private readonly ILogger<VideoMoverJob> _logger = logger;
         private readonly IVideoDirectoryHelper _directoryHelper = directoryHelper;
         private readonly IFileSystemService _fileSystem = fileSystem;
-        private readonly IReportWriter _reportWriter = reportWriter;
 
 
         public async Task<bool> Start(string folderPath)

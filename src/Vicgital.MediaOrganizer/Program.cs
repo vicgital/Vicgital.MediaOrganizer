@@ -74,6 +74,8 @@ namespace Vicgital.MediaOrganizer
                 console.Information("-----------------------------------");
                 console.Information("Processing path: {Path}", path);
 
+                // Move Photos
+                await services.GetRequiredKeyedService<IJob>("PhotoMover").Start(path);
 
                 // Move Videos, Resize if applicable
                 if (resizeVideo)
@@ -84,13 +86,6 @@ namespace Vicgital.MediaOrganizer
                 {
                     await services.GetRequiredKeyedService<IJob>("VideoMover").Start(path);
                 }
-
-                
-
-
-
-
-
             }
         }
 
@@ -134,8 +129,11 @@ namespace Vicgital.MediaOrganizer
             services.AddScoped<IReportWriter, CsvReportWriter>();
             services.AddScoped<IVideoProcessor, VideoProcessor>();
             services.AddScoped<IVideoDirectoryHelper, VideoDirectoryHelper>();
+            services.AddScoped<IPhotoDirectoryHelper, PhotoDirectoryHelper>();
             services.AddKeyedScoped<IJob, VideoResizerJob>("VideoResizer");
             services.AddKeyedScoped<IJob, VideoMoverJob>("VideoMover");
+            services.AddKeyedScoped<IJob, PhotoMoverJob>("PhotoMover");
+
 
 
             return services;

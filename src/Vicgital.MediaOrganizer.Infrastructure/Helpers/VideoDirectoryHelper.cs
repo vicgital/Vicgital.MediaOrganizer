@@ -11,18 +11,18 @@ namespace Vicgital.MediaOrganizer.Infrastructure.Helpers
     {
         private readonly List<string> allowedVideoExtensions = [.. appConfiguration.GetValue(ConfigurationKeys.AllowedVideoExtensions).Split(",")];
 
-        public async Task<List<VideoFileInfo>> GetVideoFilesAsync(string folderPath)
+        public async Task<List<MediaFileInfo>> GetVideoFilesAsync(string folderPath)
         {
             var videos = Directory.EnumerateFiles(folderPath)
                 .Where(f => allowedVideoExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()))
                 .ToList();
 
-            List<VideoFileInfo> result = [];
+            List<MediaFileInfo> result = [];
 
             foreach (var video in videos)
             {
                 FileInfo fileInfo = new(video);
-                result.Add(new VideoFileInfo
+                result.Add(new MediaFileInfo
                 {
                     Extension = fileInfo.Extension,
                     FileName = fileInfo.Name,
