@@ -42,12 +42,11 @@ Depends on Application + Domain. Contains:
 - `Processors/VideoProcessor.cs` — calls FFmpeg to encode and ffprobe to get duration
 - `Helpers/VideoDirectoryHelper.cs` — enumerates video files by allowed extensions
 - `Helpers/PhotoDirectoryHelper.cs` — enumerates photo files by allowed extensions
-- `Configuration/` — loads `appsettings.json` + env vars via `Microsoft.Extensions.Configuration`
-- `Logging/` — Serilog setup with file sink per target folder + console sink
+
 
 ### Entry Point (Vicgital.MediaOrganizer)
 - `Program.cs` — reads paths from `Paths.txt` or stdin, builds per-folder DI containers, orchestrates jobs
-- `appsettings.json` — FFmpeg paths, codec args, allowed file extensions
+- `appsettings.json` — FFmpeg paths, codec args, allowed file extensions, serilog config
 - `Paths.txt` — optional newline-separated list of directories to process
 
 ## Execution Flow
@@ -113,10 +112,6 @@ Environment: `ASPNETCORE_ENVIRONMENT` (defaults to `dev`). Supports `appsettings
 - **Dependency Inversion** — Application defines interfaces; Infrastructure provides implementations
 
 ## External Dependencies
-
-**NuGet:**
-- `Microsoft.Extensions.*` (Configuration, Logging) — v10.0.x
-- `Serilog` + sinks/enrichers — file + console logging with contextual enrichment
 
 **System tools (must be pre-installed):**
 - `ffmpeg` — video encoding

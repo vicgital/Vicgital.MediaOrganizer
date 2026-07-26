@@ -2,15 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
-using Serilog.Events;
+using Vicgital.Core.Configuration;
+using Vicgital.Core.Configuration.Extensions;
+using Vicgital.Core.Logging.Serilog.Configuration;
+using Vicgital.Core.Logging.Serilog.Configuration.Extensions;
+using Vicgital.Core.Logging.Serilog.Extensions;
 using Vicgital.MediaOrganizer.Application.Interfaces;
 using Vicgital.MediaOrganizer.Application.Jobs;
-using Vicgital.MediaOrganizer.Infrastructure.Configuration;
-using Vicgital.MediaOrganizer.Infrastructure.Configuration.Extensions;
 using Vicgital.MediaOrganizer.Infrastructure.Helpers;
-using Vicgital.MediaOrganizer.Infrastructure.Logging.Configuration;
-using Vicgital.MediaOrganizer.Infrastructure.Logging.Configuration.Extensions;
-using Vicgital.MediaOrganizer.Infrastructure.Logging.Extensions;
 using Vicgital.MediaOrganizer.Infrastructure.Processors;
 using Vicgital.MediaOrganizer.Infrastructure.Services;
 
@@ -23,7 +22,8 @@ namespace Vicgital.MediaOrganizer
 
         static async Task Main(string[] args)
         {
-            var console = GetConsoleLogger();
+            var config = ConfigurationBuilder.BuildConfiguration();
+            var console = GetConsoleLogger(config);
             console.Information("Application started at {Time}", DateTimeOffset.Now);
 
             var pathsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PathsFile);
@@ -65,13 +65,13 @@ namespace Vicgital.MediaOrganizer
 
             console.Information("Processing the following paths:");
             foreach (var path in paths)
-                console.Information("- {Path}", path);            
-            
+                console.Information("- {Path}", path);
+
 
 
             foreach (var path in paths)
             {
-                var services = GetServiceCollection(path).BuildServiceProvider();
+                var services = GetServiceCollection(path, config).BuildServiceProvider();
 
                 console.Information("-----------------------------------");
                 console.Information("Processing path: {Path}", path);
@@ -84,19 +84,19 @@ namespace Vicgital.MediaOrganizer
                 {
                     await services.GetRequiredKeyedService<IJob>("VideoResizer").Start(path);
                 }
-                else 
+                else
                 {
                     await services.GetRequiredKeyedService<IJob>("VideoMover").Start(path);
                 }
             }
         }
 
-        
+
 
         #region Helpers
 
-        private static Logger GetConsoleLogger() =>
-            LoggerConfigurationBuilder.BuildDefault(LogEventLevel.Information).CreateLogger();
+        private static Logger GetConsoleLogger(Microsoft.Extensions.Configuration.IConfiguration config) =>
+            LoggerConfigurationBuilder.BuildFromConfiguration(config).CreateLogger();
 
         private static async Task<List<string>> GetPathsFromFile(string pathsFile)
         {
@@ -117,11 +117,10 @@ namespace Vicgital.MediaOrganizer
             return [];
         }
 
-        private static ServiceCollection GetServiceCollection(string path)
+        private static ServiceCollection GetServiceCollection(string path, Microsoft.Extensions.Configuration.IConfiguration config)
         {
-            var services = new ServiceCollection();
-            var config = ConfigurationBuilder.BuildConfiguration();
-            var logger = LoggerConfigurationBuilder.BuildDefault(LogEventLevel.Information);
+            var services = new ServiceCollection();            
+            var logger = LoggerConfigurationBuilder.BuildFromConfiguration(config);
             logger.WriteToFile($"{path}/media_organizer.log", rollingInterval: RollingInterval.Infinite);
 
             services.AddAppConfiguration(config);

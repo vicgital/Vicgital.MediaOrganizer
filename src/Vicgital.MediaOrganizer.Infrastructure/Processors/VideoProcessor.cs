@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Globalization;
+using Vicgital.Core.Configuration.Services;
 using Vicgital.MediaOrganizer.Application.Interfaces;
 using Vicgital.MediaOrganizer.Domain.Constants;
 using Vicgital.MediaOrganizer.Domain.Models;
-using Vicgital.MediaOrganizer.Infrastructure.Configuration.Services;
 
 namespace Vicgital.MediaOrganizer.Infrastructure.Processors
 {

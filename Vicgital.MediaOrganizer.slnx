@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/deployment/">
     <File Path="CLAUDE.md" />
+    <File Path="nuget.config" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">

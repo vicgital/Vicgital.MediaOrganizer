@@ -1,7 +1,7 @@
-﻿using Vicgital.MediaOrganizer.Application.Interfaces;
+﻿using Vicgital.Core.Configuration.Services;
+using Vicgital.MediaOrganizer.Application.Interfaces;
 using Vicgital.MediaOrganizer.Domain.Constants;
 using Vicgital.MediaOrganizer.Domain.Models;
-using Vicgital.MediaOrganizer.Infrastructure.Configuration.Services;
 
 namespace Vicgital.MediaOrganizer.Infrastructure.Helpers
 {
@@ -32,6 +32,6 @@ namespace Vicgital.MediaOrganizer.Infrastructure.Helpers
             }
 
             return result;
-        }        
+        }
     }
 }
